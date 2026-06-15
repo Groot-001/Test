@@ -8,12 +8,14 @@ import type { Post } from "../../types/user";
 
 interface DataTableProps {
   data: Post[];
+  handleDelete: (id: number) => void;
+  handleEdit: (post: Post) => void;
 }
 
-function Datatable({ data }: DataTableProps) {
+function Datatable({ data, handleDelete, handleEdit }: DataTableProps) {
   const table = useReactTable({
     data: data,
-    columns,
+    columns: columns(handleDelete, handleEdit),
     getCoreRowModel: getCoreRowModel(),
   });
 

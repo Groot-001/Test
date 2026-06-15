@@ -1,17 +1,23 @@
-import { useCreatePost } from "./hooks/useCreateUser";
+import { useCreatePost } from "./hooks/useCreatepost";
 import { usePosts } from "./hooks/useUsers";
 import DataTable from "./components/table/Datatable";
 import { useState } from "react";
 import { useDeletePost } from "./hooks/useDelete";
+import { useEditPost } from "./hooks/useEditPost";
+import type { Post } from "./types/user";
 
 function App() {
   const [title, setTitle] = useState("");
+
+  const [editingPost, setEditingPost] = useState<Post | null>(null);
 
   const { data = [] } = usePosts();
 
   const createPostMutation = useCreatePost();
 
   const deletePostMutation = useDeletePost();
+
+  const editPostMutation = useEditPost();
 
   const handleCreate = () => {
     createPostMutation.mutate(
@@ -24,6 +30,11 @@ function App() {
         },
       },
     );
+  };
+
+  const handleEdit = (post: Post) => {
+    setEditingPost(post);
+    setTitle(post.title);
   };
 
   const handleDelete = (id: number) => {
@@ -46,8 +57,12 @@ function App() {
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Enter title"
       />
-      
-      <DataTable data={data} />
+
+      <DataTable
+        data={data}
+        handleDelete={handleDelete}
+        handleEdit={handleEdit}
+      />
     </>
   );
 }

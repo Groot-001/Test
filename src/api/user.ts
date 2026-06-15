@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Post } from "../types/user";
+import type { EditPostPayload, Post } from "../types/user";
 import type { CreatePostPayload } from "../types/user";
 
 export const getPosts = async (): Promise<Post[]> => {
@@ -32,4 +32,14 @@ export const deletePost = async (id: number) => {
   console.log(response);
 
   return response.data;
-}
+};
+
+export const editPost = async (id: number, post: EditPostPayload) => {
+  const response = await axios.put(
+    `https://jsonplaceholder.typicode.com/posts/${id}`,
+    post,
+  );
+  console.log(response);
+
+  return response.data;
+};

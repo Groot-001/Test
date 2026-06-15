@@ -3,7 +3,10 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import type { Post } from "../../types/user";
 
-export const columns: ColumnDef<Post>[] = [
+export const columns = (
+  handleDelete: (id: number) => void,
+  handleEdit: (post: Post) => void,
+): ColumnDef<Post>[] => [
   {
     accessorKey: "id",
     header: "ID",
@@ -16,7 +19,10 @@ export const columns: ColumnDef<Post>[] = [
     id: "actions",
     header: "Actions",
     cell: ({ row }) => (
-      <button onClick={() => handleDelete(row.original.id)}>Delete</button>
+      <>
+        <button onClick={() => handleEdit(row.original)}>Edit</button>
+        <button onClick={() => handleDelete(row.original.id)}>Delete</button>
+      </>
     ),
   },
 ];

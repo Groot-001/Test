@@ -6,3 +6,8 @@ export interface Post {
 export interface CreatePostPayload {
   title: string;
 }
+
+export interface EditPostPayload {
+  id: number;
+  title: string;
+}
