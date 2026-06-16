@@ -6,6 +6,7 @@ import { useDeletePost } from "./hooks/useDelete";
 // import { useEditPost } from "./hooks/useEditPost";
 import type { Post } from "./types/user";
 import { useEditPost } from "./hooks/useEditPost";
+import PostForm from "./components/table/PostForm";
 
 function App() {
   const [title, setTitle] = useState("");
@@ -19,21 +20,6 @@ function App() {
   const deletePostMutation = useDeletePost();
 
   const editPostMutation = useEditPost();
-
-  // const handleCreate = () => {
-  //   createPostMutation.mutate(
-  //     {
-  //       title,
-  //     },
-  //     {
-  //       onSuccess: () => {
-  //         setTitle("");
-  //       },
-  //     },
-  //   );
-  // };
-
-  // console.log(editingPost);
 
   const handleSubmit = () => {
     console.log("Submitting form with title:");
@@ -77,17 +63,12 @@ function App() {
 
   return (
     <>
-      <button onClick={handleSubmit}>
-        {editingPost ? "Update Post" : "Create Post"}
-      </button>
-
-      <input
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Enter title"
+      <PostForm
+        title={title}
+        setTitle={setTitle}
+        handleSubmit={handleSubmit}
+        editingPost={editingPost}
       />
-
       <DataTable
         data={data}
         handleDelete={handleDelete}
