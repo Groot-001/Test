@@ -84,7 +84,7 @@ const PostPage = () => {
     setDeletePostId(null);
   };
 
-  console.log("delete id :", deletePostId);
+//   console.log("delete id :", deletePostId);
 
   const handleCancelDelete = () => {
     setDeletePostId(null);
