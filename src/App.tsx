@@ -3,8 +3,9 @@ import { usePosts } from "./hooks/useUsers";
 import DataTable from "./components/table/Datatable";
 import { useState } from "react";
 import { useDeletePost } from "./hooks/useDelete";
-import { useEditPost } from "./hooks/useEditPost";
+// import { useEditPost } from "./hooks/useEditPost";
 import type { Post } from "./types/user";
+import { useEditPost } from "./hooks/useEditPost";
 
 function App() {
   const [title, setTitle] = useState("");
@@ -19,17 +20,50 @@ function App() {
 
   const editPostMutation = useEditPost();
 
-  const handleCreate = () => {
-    createPostMutation.mutate(
-      {
-        title,
-      },
-      {
-        onSuccess: () => {
-          setTitle("");
+  // const handleCreate = () => {
+  //   createPostMutation.mutate(
+  //     {
+  //       title,
+  //     },
+  //     {
+  //       onSuccess: () => {
+  //         setTitle("");
+  //       },
+  //     },
+  //   );
+  // };
+
+  // console.log(editingPost);
+
+  const handleSubmit = () => {
+    console.log("Submitting form with title:");
+    console.log(editingPost);
+
+    if (editingPost) {
+      editPostMutation.mutate(
+        {
+          id: editingPost.id,
+          title,
         },
-      },
-    );
+        {
+          onSuccess: () => {
+            setTitle("");
+            setEditingPost(null);
+          },
+        },
+      );
+    } else {
+      createPostMutation.mutate(
+        {
+          title,
+        },
+        {
+          onSuccess: () => {
+            setTitle("");
+          },
+        },
+      );
+    }
   };
 
   const handleEdit = (post: Post) => {
@@ -43,12 +77,8 @@ function App() {
 
   return (
     <>
-      <button
-        onClick={handleCreate}
-        disabled={!title.trim() || createPostMutation.isPending}
-        className="rounded-md bg-blue-600 px-4 py-2 text-white disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        {createPostMutation.isPending ? "Creating..." : "Create Post"}
+      <button onClick={handleSubmit}>
+        {editingPost ? "Update Post" : "Create Post"}
       </button>
 
       <input
