@@ -22,6 +22,8 @@ import { useState } from "react";
 const PostPage = () => {
   const [title, setTitle] = useState("");
 
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+
   const [editingPost, setEditingPost] = useState<Post | null>(null);
 
   const [deletePostId, setDeletePostId] = useState<number | null>(null);
@@ -48,6 +50,7 @@ const PostPage = () => {
           onSuccess: () => {
             setTitle("");
             setEditingPost(null);
+            setIsCreateOpen(false);
           },
         },
       );
@@ -59,6 +62,7 @@ const PostPage = () => {
         {
           onSuccess: () => {
             setTitle("");
+            setIsCreateOpen(false);
           },
         },
       );
@@ -68,6 +72,7 @@ const PostPage = () => {
   const handleEdit = (post: Post) => {
     setEditingPost(post);
     setTitle(post.title);
+    setIsCreateOpen(true);
   };
 
   const handleDelete = (id: number) => {
@@ -84,7 +89,7 @@ const PostPage = () => {
     setDeletePostId(null);
   };
 
-//   console.log("delete id :", deletePostId);
+  //   console.log("delete id :", deletePostId);
 
   const handleCancelDelete = () => {
     setDeletePostId(null);
@@ -97,16 +102,18 @@ const PostPage = () => {
         handleSubmit={handleSubmit}
         setTitle={setTitle}
         title={title}
+        isCreateOpen={isCreateOpen}
+        setIsCreateOpen={setIsCreateOpen}
       />
 
       {deletePostId && (
         <AlertDialog
           open={deletePostId !== null}
-            onOpenChange={(open) => {
-              if (!open) {
-                setDeletePostId(null);
-              }
-            }}
+          onOpenChange={(open) => {
+            if (!open) {
+              setDeletePostId(null);
+            }
+          }}
         >
           <AlertDialogTrigger asChild>
             <Button variant="outline">Show Dialog</Button>
