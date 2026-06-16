@@ -31,7 +31,7 @@ const PostForm = ({
       </Field>
 
       <div className="flex flex-wrap items-center gap-2 md:flex-row">
-        <Button variant="outline" onClick={handleSubmit}>
+        <Button variant="outline" onClick={handleSubmit} disabled={!title}>
           {editingPost ? "Update Post" : "Create Post"}
         </Button>
       </div>
