@@ -12,6 +12,7 @@ import search from "../../assets/Search.svg";
 import cross from "../../assets/Close.svg";
 import filter from "../../assets/Filter.svg";
 import down from "../../assets/Arrow Down.svg";
+import VisitorTable from "../Visitortable";
 
 const ListView = () => {
   return (
@@ -133,7 +134,7 @@ const ListView = () => {
 
       <section className="flex flex-col gap-2.5">
         <div className="bg-[#FFFFFF] border border-[1px_1px_0px_1px_#EAECF0] rounded-tl-3xl rounded-tr-3xl border-b-0">
-          something
+          <VisitorTable />
         </div>
       </section>
     </div>
