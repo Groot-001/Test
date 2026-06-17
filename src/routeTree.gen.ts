@@ -9,8 +9,26 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PostpageRouteImport } from './routes/postpage'
+import { Route as ListviewRouteImport } from './routes/listview'
+import { Route as HomeRouteImport } from './routes/home'
 import { Route as IndexRouteImport } from './routes/index'
 
+const PostpageRoute = PostpageRouteImport.update({
+  id: '/postpage',
+  path: '/postpage',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ListviewRoute = ListviewRouteImport.update({
+  id: '/listview',
+  path: '/listview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HomeRoute = HomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -19,28 +37,61 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/home': typeof HomeRoute
+  '/listview': typeof ListviewRoute
+  '/postpage': typeof PostpageRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/home': typeof HomeRoute
+  '/listview': typeof ListviewRoute
+  '/postpage': typeof PostpageRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/home': typeof HomeRoute
+  '/listview': typeof ListviewRoute
+  '/postpage': typeof PostpageRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/home' | '/listview' | '/postpage'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/home' | '/listview' | '/postpage'
+  id: '__root__' | '/' | '/home' | '/listview' | '/postpage'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  HomeRoute: typeof HomeRoute
+  ListviewRoute: typeof ListviewRoute
+  PostpageRoute: typeof PostpageRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/postpage': {
+      id: '/postpage'
+      path: '/postpage'
+      fullPath: '/postpage'
+      preLoaderRoute: typeof PostpageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/listview': {
+      id: '/listview'
+      path: '/listview'
+      fullPath: '/listview'
+      preLoaderRoute: typeof ListviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/home': {
+      id: '/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof HomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -53,6 +104,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  HomeRoute: HomeRoute,
+  ListviewRoute: ListviewRoute,
+  PostpageRoute: PostpageRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
