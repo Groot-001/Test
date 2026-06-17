@@ -9,11 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VisitorRouteImport } from './routes/visitor'
 import { Route as PostpageRouteImport } from './routes/postpage'
 import { Route as ListviewRouteImport } from './routes/listview'
 import { Route as HomeRouteImport } from './routes/home'
 import { Route as IndexRouteImport } from './routes/index'
 
+const VisitorRoute = VisitorRouteImport.update({
+  id: '/visitor',
+  path: '/visitor',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PostpageRoute = PostpageRouteImport.update({
   id: '/postpage',
   path: '/postpage',
@@ -40,12 +46,14 @@ export interface FileRoutesByFullPath {
   '/home': typeof HomeRoute
   '/listview': typeof ListviewRoute
   '/postpage': typeof PostpageRoute
+  '/visitor': typeof VisitorRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/home': typeof HomeRoute
   '/listview': typeof ListviewRoute
   '/postpage': typeof PostpageRoute
+  '/visitor': typeof VisitorRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,14 @@ export interface FileRoutesById {
   '/home': typeof HomeRoute
   '/listview': typeof ListviewRoute
   '/postpage': typeof PostpageRoute
+  '/visitor': typeof VisitorRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/home' | '/listview' | '/postpage'
+  fullPaths: '/' | '/home' | '/listview' | '/postpage' | '/visitor'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/home' | '/listview' | '/postpage'
-  id: '__root__' | '/' | '/home' | '/listview' | '/postpage'
+  to: '/' | '/home' | '/listview' | '/postpage' | '/visitor'
+  id: '__root__' | '/' | '/home' | '/listview' | '/postpage' | '/visitor'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,10 +76,18 @@ export interface RootRouteChildren {
   HomeRoute: typeof HomeRoute
   ListviewRoute: typeof ListviewRoute
   PostpageRoute: typeof PostpageRoute
+  VisitorRoute: typeof VisitorRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/visitor': {
+      id: '/visitor'
+      path: '/visitor'
+      fullPath: '/visitor'
+      preLoaderRoute: typeof VisitorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/postpage': {
       id: '/postpage'
       path: '/postpage'
@@ -107,6 +124,7 @@ const rootRouteChildren: RootRouteChildren = {
   HomeRoute: HomeRoute,
   ListviewRoute: ListviewRoute,
   PostpageRoute: PostpageRoute,
+  VisitorRoute: VisitorRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

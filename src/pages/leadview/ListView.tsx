@@ -131,7 +131,11 @@ const ListView = () => {
         </div>
       </section>
 
-      <section>second section</section>
+      <section className="flex flex-col gap-2.5">
+        <div className="bg-[#FFFFFF] border border-[1px_1px_0px_1px_#EAECF0] rounded-tl-3xl rounded-tr-3xl border-b-0">
+          something
+        </div>
+      </section>
     </div>
   );
 };
